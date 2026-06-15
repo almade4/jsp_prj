@@ -39,7 +39,7 @@ td{width:120px;height:80px;font-size:15px;color:#909009;text-align: right;vertic
 .satTextColor{color:#5379E1;font-weight:bold}
 
 .toDayCss{border:1px solid #6C86C4;background-color: #EFF5FA;}
-.DayCss{border:1px solid #E5E5E5;}
+.dayCss{border:1px solid #E5E5E5;}
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
