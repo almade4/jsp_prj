@@ -49,6 +49,14 @@ td{width:120px;height:80px;font-size:15px;color:#909009;text-align: right;vertic
 $(function(){
 
 });//ready
+
+function moveCal(month, year){
+	//입력된 값을 hidden에 설정하고
+	$("#month").val(month);
+	$("#year").val(year);
+	//form에 submit을 수행
+	$("#calFrm").submit();
+}//moveCal
 </script>
 </head>
 <body>
@@ -92,12 +100,15 @@ selectDay.append(nowYear).append(nowMonth);
 
 //오늘을 표현하기위한 flag변수
 boolean toDayFlag=toDay.toString().equals(selectDay.toString());
-
 %>
+<form action="calendar2.jsp" method="post" id="calFrm">
+<input type="hidden" name="year" id="year"/>
+<input type="hidden" name="month" id="month"/>
+</form>
 <div id="calHeader">
-<a href="calendar.jsp?month=<%= nowMonth-1==0?12:nowMonth-1 %>&year=<%= nowMonth-1==0?nowYear-1:nowYear %>" title="이전 월">&lt;&lt;</a>
-<a href="calendar.jsp?year=<%= Calendar.getInstance().get(Calendar.YEAR) %>&month=<%= Calendar.getInstance().get(Calendar.MONTH)+1 %>" title="오늘"><span class="calTitle"><%= nowYear %>.<%= nowMonth %></span></a>
-<a href="calendar.jsp?month=<%= nowMonth+1==13?1:nowMonth+1 %>&year=<%= nowMonth+1==13?nowYear+1:nowYear %>" title="다음 월">&gt;&gt;</a>
+<a href="#void" onclick="moveCal(<%= nowMonth-1==0?12:nowMonth-1 %>,<%= nowMonth-1==0?nowYear-1:nowYear %>)" title="이전 월">&lt;&lt;</a>
+<a href="calendar2.jsp" title="오늘"><span class="calTitle"><%= nowYear %>.<%= nowMonth %></span></a>
+<a href="#void" onclick="moveCal(<%= nowMonth+1==13?1:nowMonth+1 %>,<%= nowMonth+1==13?nowYear+1:nowYear %>)" title="다음 월">&gt;&gt;</a>
 </div>
 <div id="calContainer">
 <table id="calTab">

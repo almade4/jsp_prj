@@ -1,7 +1,8 @@
-<%@page import="jdk.internal.misc.FileSystemOption"%>
 <%@page import="java.util.Calendar"%>
+<%@page import="day0622.CalendarDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,6 +50,14 @@ td{width:120px;height:80px;font-size:15px;color:#909009;text-align: right;vertic
 $(function(){
 
 });//ready
+
+function moveCal(month, year){
+	//입력된 값을 hidden에 설정하고
+	$("#month").val(month);
+	$("#year").val(year);
+	//form에 submit을 수행
+	$("#calFrm").submit();
+}//moveCal
 </script>
 </head>
 <body>
@@ -57,6 +66,7 @@ $(function(){
 </div>
 <div id="container">
 <div id="calWarp">
+<jsp:useBean id="cDTO" class="day0622.CalendarDTO" scope="page"/>
 <%
 Calendar cal=Calendar.getInstance();
 //오늘의 요일을 표현하기 위해서 오늘정보를 저장한 후 비교한다
@@ -66,14 +76,14 @@ toDay.append(cal.get(Calendar.YEAR)).append(cal.get(Calendar.MONDAY)+1);
 int nowYear=0;
 int nowMonth=0;
 
-String year=request.getParameter("year");
+String year=cDTO.getYear();
 if(year != null){
 	cal.set(Calendar.YEAR, Integer.parseInt(year));
 }//end if
 
 nowYear=cal.get(Calendar.YEAR);
 
-String month=request.getParameter("month");
+String month=cDTO.getMonth();
 if(month != null){//month라는 web parameter가 존재하면
 	cal.set(Calendar.MONTH, Integer.parseInt(month)-1);
 }//end if
@@ -92,12 +102,15 @@ selectDay.append(nowYear).append(nowMonth);
 
 //오늘을 표현하기위한 flag변수
 boolean toDayFlag=toDay.toString().equals(selectDay.toString());
-
 %>
+<form action="calendar2.jsp" method="post" id="calFrm">
+<input type="hidden" name="year" id="year"/>
+<input type="hidden" name="month" id="month"/>
+</form>
 <div id="calHeader">
-<a href="calendar.jsp?month=<%= nowMonth-1==0?12:nowMonth-1 %>&year=<%= nowMonth-1==0?nowYear-1:nowYear %>" title="이전 월">&lt;&lt;</a>
-<a href="calendar.jsp?year=<%= Calendar.getInstance().get(Calendar.YEAR) %>&month=<%= Calendar.getInstance().get(Calendar.MONTH)+1 %>" title="오늘"><span class="calTitle"><%= nowYear %>.<%= nowMonth %></span></a>
-<a href="calendar.jsp?month=<%= nowMonth+1==13?1:nowMonth+1 %>&year=<%= nowMonth+1==13?nowYear+1:nowYear %>" title="다음 월">&gt;&gt;</a>
+<a href="#void" onclick="moveCal(<%= nowMonth-1==0?12:nowMonth-1 %>,<%= nowMonth-1==0?nowYear-1:nowYear %>)" title="이전 월">&lt;&lt;</a>
+<a href="calendar3.jsp" title="오늘"><span class="calTitle"><%= nowYear %>.<%= nowMonth %></span></a>
+<a href="#void" onclick="moveCal(<%= nowMonth+1==13?1:nowMonth+1 %>,<%= nowMonth+1==13?nowYear+1:nowYear %>)" title="다음 월">&gt;&gt;</a>
 </div>
 <div id="calContainer">
 <table id="calTab">
