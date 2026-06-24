@@ -39,9 +39,12 @@ request.setCharacterEncoding("UTF-8");
             if(flag){//회원가입 성공
             %>
 			<h2><%= mDTO.getName() %>님의 회원가입을 축하드립니다.</h2>
+			<h2>${param.name}님의 회원가입을 축하드립니다.</h2>
 			입력하신 정보는 아래와 같습니다.<br>
 			<label>이메일</label> : <%= mDTO.getEmail() %><br>
+			<label>이메일</label> : ${param.email }<br>
 			<label>전화번호</label> : <%= mDTO.getPhone1() %>-<%= mDTO.getPhone2() %>-<%= mDTO.getPhone3() %><br>
+			<label>전화번호</label> : ${param.phone1 }-${param.phone2 }-${param.phone3 }<br>
 			<a href="#void">로그인</a>
             <%	
             }else{//회원가입 실패
